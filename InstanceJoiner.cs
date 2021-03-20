@@ -27,7 +27,7 @@ namespace InstanceJoiner
                "Join\nInstance",
                delegate ()
                {
-                   new PortalInternal().Method_Private_Void_String_String_PDM_0(Clipboard.GetText().Substring(0, Clipboard.GetText().IndexOf(":")), Clipboard.GetText().Substring(Clipboard.GetText().IndexOf(":") + 1));
+                   new PortalInternal().Method_Private_Void_String_String_PDM_0(Clipboard.GetText().Split(':')[0]), Clipboard.GetText().Split(':')[1]);
                },
                "Join an instance via your clipboard."
            );
