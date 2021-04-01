@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using MelonLoader;
 using UnityEngine;
 using RubyButtonAPI;
@@ -20,17 +18,17 @@ namespace InstanceJoiner
                    Clipboard.SetText($"{RoomManager.field_Internal_Static_ApiWorld_0.id}:{RoomManager.field_Internal_Static_ApiWorldInstance_0.idWithTags}");
                },
                "Copy the ID of the current instance."
-           );
+               );
             QMSingleButton JoinInstanceButton = new QMSingleButton(
                "ShortcutMenu",
                5, -1,
                "Join\nInstance",
                delegate ()
                {
-                   new PortalInternal().Method_Private_Void_String_String_PDM_0(Clipboard.GetText().Split(':')[0]), Clipboard.GetText().Split(':')[1]);
+                   new PortalInternal().Method_Private_Void_String_String_PDM_0(Clipboard.GetText().Split(':')[0], Clipboard.GetText().Split(':')[1]);
                },
                "Join an instance via your clipboard."
-           );
+               );
             Misc.ChangeButtonSize(CopyIDButton.getGameObject(), 420, 210);
             Misc.ChangeButtonSize(JoinInstanceButton.getGameObject(), 420, 210);
             Misc.MoveButton(CopyIDButton.getGameObject(), CopyIDButton.getGameObject().GetComponent<RectTransform>().localPosition.x, CopyIDButton.getGameObject().GetComponent<RectTransform>().localPosition.y + 105);
