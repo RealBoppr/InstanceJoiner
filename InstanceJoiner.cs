@@ -4,33 +4,28 @@ using MelonLoader;
 using UnityEngine;
 using RubyButtonAPI;
 
-[assembly: MelonInfo(typeof(InstanceJoiner.Main), "InstanceJoiner", "1.1", "Boppr")]
+[assembly: MelonInfo(typeof(InstanceJoiner.Main), "InstanceJoiner", "1.2", "Boppr")]
 [assembly: MelonGame("VRChat", "VRChat")]
 
 namespace InstanceJoiner
 {
-    public abstract class ComfyMod : MelonMod
-    {
-        public void StartMod() => MelonCoroutines.Start(CheckUIManager());
-        private IEnumerator CheckUIManager()
-        {
-            while (VRCUiManager.prop_VRCUiManager_0 == null) { yield return null; }
-            OnUIInit();
-        }
-        public virtual void OnUIInit() { }
-    }
-    public class Main : ComfyMod
+    public class Main : MelonMod
     {
         public static MelonPreferences_Entry<int> ButtonsX;
         public static MelonPreferences_Entry<int> ButtonsY;
         public override void OnApplicationStart()
         {
-            StartMod();
+            MelonCoroutines.Start(CheckUIManager());
             MelonPreferences_Category Category = MelonPreferences.CreateCategory("InstanceJoiner", "InstanceJoiner");
-            ButtonsX = (MelonPreferences_Entry<int>)Category.CreateEntry("ButtonsX", 0, "Button Position X");
-            ButtonsY = (MelonPreferences_Entry<int>)Category.CreateEntry("ButtonsY", 1, "Button Position Y");
+            ButtonsX = Category.CreateEntry("ButtonsX", 0, "Button Position X");
+            ButtonsY = Category.CreateEntry("ButtonsY", 1, "Button Position Y");
         }
-        public override void OnUIInit()
+        private IEnumerator CheckUIManager()
+        {
+            while (VRCUiManager.prop_VRCUiManager_0 == null) { yield return null; }
+            OnUIInit();
+        }
+        private void OnUIInit()
         {
             QMSingleButton CopyIDButton = new QMSingleButton(
                "ShortcutMenu",
@@ -38,7 +33,7 @@ namespace InstanceJoiner
                "Copy\nInstance ID",
                delegate ()
                {
-                   Clipboard.SetText($"{RoomManager.field_Internal_Static_ApiWorld_0.id}:{RoomManager.field_Internal_Static_ApiWorldInstance_0.idWithTags}");
+                   Clipboard.SetText($"{RoomManager.field_Internal_Static_ApiWorld_0.id}:{RoomManager.field_Internal_Static_ApiWorldInstance_0.instanceId}");
                },
                "Copy the ID of the current instance."
                );
