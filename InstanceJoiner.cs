@@ -1,10 +1,12 @@
 ﻿using System.Collections;
-using System.Windows.Forms;
+using Clipboard = System.Windows.Forms.Clipboard;
 using MelonLoader;
 using UnityEngine;
+using System.Text;
 using RubyButtonAPI;
+using System.Threading.Tasks;
 
-[assembly: MelonInfo(typeof(InstanceJoiner.Main), "InstanceJoiner", "1.2", "Boppr")]
+[assembly: MelonInfo(typeof(InstanceJoiner.Main), "InstanceJoiner", "1.2.1", "Boppr")]
 [assembly: MelonGame("VRChat", "VRChat")]
 
 namespace InstanceJoiner
@@ -32,9 +34,7 @@ namespace InstanceJoiner
                ButtonsX.Value, ButtonsY.Value,
                "Copy\nInstance ID",
                delegate ()
-               {
-                   Clipboard.SetText($"{RoomManager.field_Internal_Static_ApiWorld_0.id}:{RoomManager.field_Internal_Static_ApiWorldInstance_0.instanceId}");
-               },
+               { Clipboard.SetText($"{RoomManager.field_Internal_Static_ApiWorld_0.id}:{RoomManager.field_Internal_Static_ApiWorldInstance_0.instanceId}"); },
                "Copy the ID of the current instance."
                );
             QMSingleButton JoinInstanceButton = new QMSingleButton(
@@ -42,9 +42,7 @@ namespace InstanceJoiner
                ButtonsX.Value, ButtonsY.Value,
                "Join\nInstance",
                delegate ()
-               {
-                   new PortalInternal().Method_Private_Void_String_String_PDM_0(Clipboard.GetText().Split(':')[0], Clipboard.GetText().Split(':')[1]);
-               },
+               { new PortalInternal().Method_Private_Void_String_String_PDM_0(Clipboard.GetText().Split(':')[0], Clipboard.GetText().Split(':')[1]); },
                "Join an instance via your clipboard."
                );
             Misc.ChangeButtonSize(CopyIDButton.getGameObject(), 420, 210);
