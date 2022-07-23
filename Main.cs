@@ -25,7 +25,7 @@ namespace InstanceJoiner
             {
                 if (GUI.Button(new(Config.CopyX, Config.CopyY, 150, 20), "Copy Instance"))
                 {
-                    Clipboard.SetText($"{World.id}:{Instance.id}");
+                    Clipboard.SetText(Instance.id);
                 }
                 if (GUI.Button(new(Config.JoinX, Config.JoinY, 150, 20), "Join Instance"))
                 {
